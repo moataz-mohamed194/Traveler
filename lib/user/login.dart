@@ -1,14 +1,9 @@
-import 'dart:async';
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../globals_values/globals.dart';
-import '../home_page/home.dart';
 import 'forgetpassword.dart';
 import 'sign_up.dart';
 
@@ -99,11 +94,12 @@ class LoginPage extends State<Login> {
   String _erroe;
 
   _onclick() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
     if (_formKey.currentState.validate()) {
       try {
         final result = await InternetAddress.lookup('google.com');
         if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-          //  print('connected');
           final FormState form = _formKey.currentState;
           int len = 0;
           int len1;
@@ -115,16 +111,16 @@ class LoginPage extends State<Login> {
             len1 = len + 1;
           });
           DateTime now = DateTime.now();
-          //setState(() {
           await FirebaseAuth.instance
               .signInWithEmailAndPassword(
                   email: _email.text, password: _password.text)
               .whenComplete(() {
+            prefs.setString('login', 'yes');
+
             setState(() {
               _erroe = "d";
             });
           }).catchError((e) {
-            //    print("Erroeee: $e");
             setState(() {
               _erroe =
                   "PlatformException(ERROR_WRONG_PASSWORD, The password is invalid or the user does not have a password., null)";
@@ -140,27 +136,17 @@ class LoginPage extends State<Login> {
               "email1": "${_email.text}",
               "password": "${_password.text}",
               "lastseen": "${now.toString()}"
-            }).catchError((e) {
-//print(e)
-            });
+            }).catchError((e) {});
             _password.clear();
             _email.clear();
-            // print("added");
 
             {
               Navigator.of(context).pushNamedAndRemoveUntil(
                   '/LandPage', (Route<dynamic> route) => false);
             }
-
-            /*  {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => LandPage()));
-            }*/
           }
-          //});
         }
       } on SocketException catch (_) {
-        //  print('not connected');
         showbottomsheet();
       }
     }
@@ -301,10 +287,7 @@ class LoginPage extends State<Login> {
                     ),
                     padding: new EdgeInsets.symmetric(
                         vertical: 0.0,
-                        horizontal: /*100.0*/ MediaQuery.of(context)
-                                .size
-                                .width /
-                            4),
+                        horizontal: MediaQuery.of(context).size.width / 4),
                   ),
                   onTap: () {
                     _onclick();

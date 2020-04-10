@@ -232,14 +232,8 @@ class _MyHomePageState extends State<viewplaces> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(
-            child: //<Widget>[
-                Column(
-      children: <Widget>[
-        _resultList1(),
-      ],
-    )
-            //  ],
-            ));
+        body: Container(
+      child: _resultList1(),
+    ));
   }
 }

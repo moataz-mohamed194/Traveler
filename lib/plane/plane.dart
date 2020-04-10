@@ -1,14 +1,13 @@
 import 'dart:core';
 import 'dart:ui';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart' as prefix0;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
-//to make sure that page is working make the pick date range 2019-12-19
 import '../globals_values/globals.dart';
+// to make sure that page is work choose the plane time be 2020-10-24 or 2020-12-19
 
 class plane extends StatefulWidget {
   @override

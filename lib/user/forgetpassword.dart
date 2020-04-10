@@ -86,9 +86,6 @@ class _MyHomePageState2 extends State<forgetpassword> {
                     SizedBox(
                       height: MediaQuery.of(context).size.height / 30,
                     ),
-/*                    SizedBox(
-                      height: MediaQuery.of(context).size.height-850,
-                    ),*/
                     Form(
                       key: _formKey,
                       child: new Container(

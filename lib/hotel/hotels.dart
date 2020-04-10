@@ -1,25 +1,13 @@
-import 'dart:async';
 import 'dart:core';
 import 'dart:ui';
-
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart' as prefix0;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
-import 'package:gradient_bottom_navigation_bar/gradient_bottom_navigation_bar.dart';
-
 import '../globals_values/globals.dart';
-import '../main.dart';
-import '../user/forgetpassword.dart';
-import '../user/login.dart';
-import '../user/sign_up.dart';
 import 'HotelBook.dart';
 
 class Hotels extends StatefulWidget {
@@ -85,35 +73,17 @@ class Hotel extends State<Hotels> {
     return Firestore.instance.collection('hotels').getDocuments();
   }
 
-  //="images/san1.jpg"
-  //final StorageReference _storageReference = FirebaseStorage().ref().child('san1.jpg');
-
   String _img;
 
-  //final StorageReference storageRef =
-  //FirebaseStorage.instance.ref().child('san.jpg');
-  /*final StorageUploadTask uploadTask = storageRef.putFile(
-    File(filePath),
-  );*/
   @override
   Hotel() {
     Hotel1();
   }
 
   Hotel1() async {
-    /*//final StorageTaskSnapshot downloadUrl =
-    //(await uploadTask.onComplete);
-    final String url = (await storageRef.getDownloadURL());
-    print("ggggggggggggggggggggggggggggggggg${url}");
-    //var tempimg =ImagePicker.pickImage(source:ImageSource.gallery);
-    var tempimg =_storageReference.getDownloadURL()  ;*/
     _onclick().then((result1) {
       setState(() {
-        /*   print("iiiiiiiiiiiiiiiiiiiii${url}");
-
-        _img=url ;*/
         result = result1;
-        //  print("fffffffffffffffffffffffffffffffffffffffffffffff");
       });
     });
   }
@@ -125,7 +95,6 @@ class Hotel extends State<Hotels> {
   double z1, z2, z3;
 
   Widget _resultList() {
-    //  print("ggggggggggggggggggggggggggggggggg${_img}");
     if (result != null) {
       return prefix0.ListView.builder(
           itemCount: result.documents.length,
@@ -140,7 +109,6 @@ class Hotel extends State<Hotels> {
             z2 = double.parse(q2);
             z3 = double.parse(q3);
             growableList = [0.0, z1, z2, z3];
-            //growableList = [0.0,z1,z2,z3];
             return prefix0.Column(
               children: <Widget>[
                 InkWell(
@@ -182,10 +150,6 @@ class Hotel extends State<Hotels> {
                                             20,
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  /* FlatButton.icon(
-                                    onPressed: _onclick,
-                                    materialTapTargetSize:MaterialTapTargetSize.padded ,
-                                    icon: */
                                   Row(
                                     children: <Widget>[
                                       Icon(
@@ -195,7 +159,7 @@ class Hotel extends State<Hotels> {
                                                 .width /
                                             28,
                                       ),
-                                      /* label: */ SingleChildScrollView(
+                                      SingleChildScrollView(
                                         child: Text(
                                           "$_address",
                                           style: prefix0.TextStyle(
@@ -377,10 +341,11 @@ class Hotel extends State<Hotels> {
           color: Color(0xfff48953),
           size: 50.0,
         ),
-      ); //Text("Loading",style: prefix0.TextStyle(fontSize: 20),);
+      );
     }
   }
 
+  var date = DateTime.now();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -436,10 +401,10 @@ class Hotel extends State<Hotels> {
                                             initialLastDate:
                                                 (new DateTime.now())
                                                     .add(new Duration(days: 7)),
-                                            firstDate: new DateTime(2015),
-                                            lastDate: new DateTime(2020));
+                                            firstDate: new DateTime(date.year),
+                                            lastDate:
+                                                new DateTime(date.year + 2));
                                     if (picked != null && picked.length == 2) {
-                                      //     print(picked);
                                       setState(() {
                                         res = picked;
                                         fir = "${res[0]}";
@@ -476,8 +441,9 @@ class Hotel extends State<Hotels> {
                                             initialLastDate:
                                                 (new DateTime.now())
                                                     .add(new Duration(days: 7)),
-                                            firstDate: new DateTime(2015),
-                                            lastDate: new DateTime(2020));
+                                            firstDate: new DateTime(date.year),
+                                            lastDate:
+                                                new DateTime(date.year + 2));
                                     if (picked != null && picked.length == 2) {
                                       //   print(picked);
                                       setState(() {
@@ -512,149 +478,7 @@ class Hotel extends State<Hotels> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 30,
                   ),
-                  /* InkWell(
-                      child:
-                      Container(
-                          width: MediaQuery.of(context).size.width / 1.2,
-                          height: MediaQuery.of(context).size.width / 3,
-                          decoration: BoxDecoration(
-                            borderRadius: new BorderRadius.circular(20.0),
-                            gradient: LinearGradient(
-                              colors: [Color(0xFFFBD52D), Color(0xFFEF3A7B)],
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                            ),
-                          ),
-                          child: Container(
-                            child: Row(
-                              children: <Widget>[
-                                ClipRRect(
-                                  borderRadius: new BorderRadius.only(topLeft:Radius.circular(20.0),bottomLeft:Radius.circular(20.0) ),
-                                  child: Image.asset('images/san1.jpg',
-                                    width: MediaQuery.of(context).size.width / 2.4,),
-                                ),
-                                Container(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      Text("Four seasons",style: prefix0.TextStyle(fontSize: prefix0.MediaQuery.of(context).size.width/20,fontWeight: FontWeight.bold),),
-                                      /* FlatButton.icon(
-                                    onPressed: _onclick,
-                                    materialTapTargetSize:MaterialTapTargetSize.padded ,
-                                    icon: */
-                                      Row(
-                                        children: <Widget>[
-                                          Icon(Icons.location_on,size: prefix0.MediaQuery.of(context).size.width/28,),
-                                          /* label: */Text("Alexandria,san astafno",
-                                            style: prefix0.TextStyle(fontSize: prefix0.MediaQuery.of(context).size.width/28),
-                                          ),
-                                        ],
-
-                                      ),
-                                      Text("\$$res0",style: prefix0.TextStyle(fontSize: prefix0.MediaQuery.of(context).size.width/20)),
-                                      Row(
-                                        children: <Widget>[
-                                          a1==0?Icon(Icons.star,color: Colors.yellow,size: 20,):prefix0.Container(),
-                                          a2==0?Icon(Icons.star,color: Colors.yellow,size: 20,):prefix0.Container(),
-                                          a3==0?Icon(Icons.star,color: Colors.yellow,size: 20,):prefix0.Container(),
-                                          a4==0?Icon(Icons.star,color: Colors.yellow,size: 20,):prefix0.Container(),
-                                          a5==0?Icon(Icons.star,color: Colors.yellow,size: 20,):prefix0.Container(),
-                                          a1==1?Icon(Icons.star_half,color: Colors.yellow,size: 20,):prefix0.Container(),
-                                          a2==1?Icon(Icons.star_half,color: Colors.yellow,size: 20,):prefix0.Container(),
-                                          a3==1?Icon(Icons.star_half,color: Colors.yellow,size: 20,):prefix0.Container(),
-                                          a4==1?Icon(Icons.star_half,color: Colors.yellow,size: 20,): prefix0.Container(),
-                                          a5==1?Icon(Icons.star_half,color: Colors.yellow,size: 20,):prefix0.Container(),
-                                          a1==2?Icon(Icons.star_border,color: Colors.yellow,size: 20,):prefix0.Container(),
-                                          a2==2?Icon(Icons.star_border,color: Colors.yellow,size: 20,):prefix0.Container(),
-                                          a3==2?Icon(Icons.star_border,color: Colors.yellow,size: 20,):prefix0.Container(),
-                                          a4==2?Icon(Icons.star_border,color: Colors.yellow,size: 20,):prefix0.Container(),
-                                          a5==2?Icon(Icons.star_border,color: Colors.yellow,size: 20,):prefix0.Container(),
-                                        ],
-                                      )
-
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          )
-                      ),
-                      onTap: (){
-                        {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => HotelBook()));
-                        }
-                        print("555555555555555555555");
-                      },
-                    ),*/
-                  /* ListTile(
-            title: Text("result.documents[i].data['name']"),
-            subtitle: Text("result.documents[i].data['address']"),
-          ),*/
                   _resultList(),
-
-                  /* StreamBuilder<DocumentSnapshot>(
-                  stream: Firestore.instance.collection('hotels').document('1').snapshots(),
-                  builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                    if(snapshot.hasError){
-                      return Text('Error:${snapshot.error}');
-                    }switch (snapshot.connectionState) {
-                      case prefix0.ConnectionState.waiting: return Text("Loading ......");
-                      default:
-                        return prefix0.Column(
-                          children: <Widget>[
-                            Text(snapshot.data['name']),
-                            Text(snapshot.data['address']),
-                            Text(snapshot.data['price_of_single']),
-                            Text(snapshot.data['one_star'])
-                          ],
-                        );
-                    }
-                  }
-                ),*/
-/*
-
-          new StreamBuilder(
-            stream: Firestore.instance.collection('hotels').snapshots(),
-            builder: (context, snapshot) {
-              if(snapshot.hasError){
-                return Text('Error:${snapshot.error}');
-              }
-              if (!snapshot.hasData) return new Text('Loading...');
-              return new ListView(
-                children: snapshot.data.documents.map<Widget>((document) {
-                  return prefix0.Column(
-                    children: <Widget>[
-                      new Text(document['name']),
-                      new Text(document['address']),
-                      new Text(document['price_of_Double']),
-                      new Text(document['three_star']),
-                    ],
-                  );
-                }).toList(),
-              );
-            },
-          )
-*/
-                  /*        StreamBuilder<QuerySnapshot>(
-                      stream: Firestore.instance.collection('hotels').snapshots(),
-                      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                        if (snapshot.hasError)
-                          return new Text('Error: ${snapshot.error}');
-                        switch (snapshot.connectionState) {
-                          case ConnectionState.waiting: return new Text('Loading...');
-                          default:
-                            return new ListView(
-                              children: snapshot.data.documents.map((DocumentSnapshot document) {
-                                return new ListTile(
-                                  title: new Text(document['name']),
-                                  subtitle: new Text(document['address']),
-                                );
-                              }).toList(),
-                            );
-                        }
-                      },
-                    )*/
                 ],
               ),
             ],

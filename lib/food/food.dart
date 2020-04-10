@@ -57,9 +57,7 @@ class _MyHomePageState extends State<food> {
         );
       },
       child: InkWell(
-          onTap: () {
-            // moveCamera();
-          },
+          onTap: () {},
           child: Stack(children: [
             Center(
                 child: Container(
